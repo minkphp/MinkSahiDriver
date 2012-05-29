@@ -7,8 +7,6 @@ use Behat\Mink\Mink,
 
 use Behat\Mink\Driver\SahiDriver;
 
-require_once 'JavascriptDriverTest.php';
-
 /**
  * @group sahidriver
  */
