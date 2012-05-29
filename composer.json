@@ -16,7 +16,7 @@
 
     "require": {
         "php":                ">=5.3.1",
-        "behat/mink":         "dev-develop",
+        "behat/mink":         ">=1.4.0,<1.5.0-dev",
         "behat/sahi-client":  ">=1.0.1,<1.1.x-dev"
     },
 
