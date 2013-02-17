@@ -422,7 +422,7 @@ JS;
 JS;
             $value = $this->evaluateScript($function);
 
-            if ('' === $value) {
+            if ('' === $value || false === $value) {
                 return array();
             } else {
                 return explode(',', $value);
