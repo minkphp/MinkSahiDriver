@@ -1,6 +1,9 @@
 Mink Sahi.JS Driver
 ===================
 
+[![Build
+Status](https://travis-ci.org/Behat/MinkSahiDriver.png?branch=master)](https://travis-ci.org/Behat/MinkSahiDriver)
+
 Usage Example
 -------------
 
