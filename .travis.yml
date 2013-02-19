@@ -11,9 +11,9 @@ before_script:
   - sleep 4
 
   - curl http://garr.dl.sourceforge.net/project/sahi/sahi-v43/20130206/sahi_20130206.zip > sahi.zip
-  - unzip sahi.zip
+  - unzip sahi.zip > /dev/null
   - cd sahi/bin
-  - sh sahi.sh & > dev/null
+  - sh sahi.sh > /dev/null &
   - cd -
   - sleep 4
 
