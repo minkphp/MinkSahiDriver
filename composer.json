@@ -16,8 +16,8 @@
 
     "require": {
         "php":                ">=5.3.1",
-        "behat/mink":         ">=1.4,<1.5-dev",
-        "behat/sahi-client":  ">=1.1,<1.2-dev"
+        "behat/mink":         "~1.4.3",
+        "behat/sahi-client":  "~1.1.0"
     },
 
     "autoload": {
