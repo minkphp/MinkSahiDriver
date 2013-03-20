@@ -366,7 +366,8 @@ JS;
      */
     public function getValue($xpath)
     {
-        $xpath = $this->prepareXPath($xpath);
+        $xpathEscaped = $this->prepareXPath($xpath);
+        
         $tag   = $this->getTagName($xpath);
         $type  = $this->getAttribute($xpath, 'type');
         $value = null;
@@ -398,7 +399,7 @@ JS;
                 return $this->evaluateScript($function);
             }
         } elseif ('checkbox' === $type) {
-            return $this->client->findByXPath($xpath)->isChecked();
+            return $this->client->findByXPath($xpathEscaped)->isChecked();
         } elseif ('select' === $tag && 'multiple' === $this->getAttribute($xpath, 'multiple')) {
             $name = $this->getAttribute($xpath, 'name');
 
@@ -429,7 +430,7 @@ JS;
             }
         }
 
-        return $this->client->findByXPath($xpath)->getValue();
+        return $this->client->findByXPath($xpathEscaped)->getValue();
     }
 
     /**
