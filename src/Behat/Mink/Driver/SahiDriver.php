@@ -714,6 +714,23 @@ JS;
                 var item = elements[f];
                 if ("{$value}" == item.value) {
                     item.checked = true;
+
+                    var event;
+                    if (document.createEvent) {
+                        event = document.createEvent("HTMLEvents");
+                        event.initEvent("change", true, true);
+                    } else {
+                        event = document.createEventObject();
+                        event.eventType = "change";
+                    }
+
+                    event.eventName = "change";
+
+                    if (document.createEvent) {
+                        item.dispatchEvent(event);
+                    } else {
+                        item.fireEvent("on" + event.eventType, event);
+                    }
                 }
             }
         }
