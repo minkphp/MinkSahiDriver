@@ -421,6 +421,18 @@ JS;
     }
 
     /**
+     * Checks whether select option, located by it's XPath query, is selected.
+     *
+     * @param string $xpath
+     *
+     * @return Boolean
+     */
+    public function isSelected($xpath)
+    {
+        return $this->client->findByXPath($this->prepareXPath($xpath))->isSelected();
+    }
+
+    /**
      * Clicks button or link located by it's XPath query.
      *
      * @param string $xpath
