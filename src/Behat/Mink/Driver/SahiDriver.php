@@ -276,7 +276,43 @@ class SahiDriver implements DriverInterface
      */
     public function getScreenshot()
     {
-        throw new UnsupportedDriverActionException('Screenshots are not supported by %s', $this);
+        $varname = '__screenshot_' . uniqid(true);
+
+        // mop: poor mans javascript code escaper :S
+        $html2canvasCode = json_encode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'html2canvas.js'));
+
+        $function = <<<JS
+(function() {
+    var takeScreenShot = function() {
+        html2canvas(document.body, { onrendered:function(canvas) {
+            {$varname} = canvas.toDataURL('image/png');
+        }});
+    }
+    if (typeof html2canvas != 'function') {
+        var script = document.createElement('script');
+        script.text = {$html2canvasCode};
+        document.body.appendChild(script);
+    }
+    takeScreenShot();
+})()
+JS;
+        $this->executeScript($function);
+
+        $this->wait(5000, 'typeof ' . $varname . ' == "string"');
+
+        $getter = <<<JS
+(function() {
+    setTimeout(function() {
+        delete {$varname};
+    }, 1);
+    return {$varname};
+})()
+JS;
+        $png = $this->evaluateScript($getter);
+        if (!preg_match('/^data:image\/png;base64,/', $png)) {
+            throw new \RuntimeException('Unexpected screenshot result ' . $png);
+        }
+        return base64_decode(substr($png, 22));
     }
 
     /**
