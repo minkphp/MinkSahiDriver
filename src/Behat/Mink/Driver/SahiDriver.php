@@ -203,7 +203,7 @@ class SahiDriver extends CoreDriver
         $varname = '__screenshot_' . uniqid(true);
 
         // mop: poor mans javascript code escaper :S
-        $html2canvasCode = json_encode(file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'html2canvas.js'));
+        $html2canvasCode = json_encode(file_get_contents(__DIR__ . '/../../../../html2canvas.js'));
 
         $function = <<<JS
 (function() {
