@@ -6,9 +6,7 @@ use Behat\SahiClient\Client,
     Behat\SahiClient\Exception\ConnectionException;
 
 use Behat\Mink\Session,
-    Behat\Mink\Element\NodeElement,
-    Behat\Mink\Exception\DriverException,
-    Behat\Mink\Exception\UnsupportedDriverActionException;
+    Behat\Mink\Element\NodeElement;
 
 /*
  * This file is part of the Behat\Mink.
@@ -23,7 +21,7 @@ use Behat\Mink\Session,
  *
  * @author Konstantin Kudryashov <ever.zet@gmail.com>
  */
-class SahiDriver implements DriverInterface
+class SahiDriver extends CoreDriver
 {
     private $started = false;
     private $browserName;
@@ -151,68 +149,6 @@ class SahiDriver implements DriverInterface
     }
 
     /**
-     * Sets HTTP Basic authentication parameters
-     *
-     * @param string|Boolean $user     user name or false to disable authentication
-     * @param string         $password password
-     *
-     * @throws UnsupportedDriverActionException
-     */
-    public function setBasicAuth($user, $password)
-    {
-        throw new UnsupportedDriverActionException('HTTP Basic authentication is not supported by %s', $this);
-    }
-
-    /**
-     * Switches to specific browser window.
-     *
-     * @param string $name window name (null for switching back to main window)
-     *
-     * @throws UnsupportedDriverActionException
-     */
-    public function switchToWindow($name = null)
-    {
-        throw new UnsupportedDriverActionException('Window management is broken in Sahi, so %s does not support switching into windows', $this);
-    }
-
-    /**
-     * Switches to specific iFrame.
-     *
-     * @param string $name iframe name (null for switching back)
-     *
-     * @throws UnsupportedDriverActionException
-     */
-    public function switchToIFrame($name = null)
-    {
-        throw new UnsupportedDriverActionException('Sahi does not have ability to switch into iFrames, so %s does not support it too', $this);
-    }
-
-    /**
-     * Sets specific request header on client.
-     *
-     * @param string $name
-     * @param string $value
-     *
-     * @throws UnsupportedDriverActionException
-     */
-    public function setRequestHeader($name, $value)
-    {
-        throw new UnsupportedDriverActionException('Request headers manipulation is not supported by %s', $this);
-    }
-
-    /**
-     * Returns last response headers.
-     *
-     * @return array
-     *
-     * @throws UnsupportedDriverActionException
-     */
-    public function getResponseHeaders()
-    {
-        throw new UnsupportedDriverActionException('Response headers manipulation is not supported by %s', $this);
-    }
-
-    /**
      * Sets cookie.
      *
      * @param string $name
@@ -245,18 +181,6 @@ class SahiDriver implements DriverInterface
     }
 
     /**
-     * Returns last response status code.
-     *
-     * @return integer
-     *
-     * @throws UnsupportedDriverActionException
-     */
-    public function getStatusCode()
-    {
-        throw new UnsupportedDriverActionException('Status code reading is not supported by %s', $this);
-    }
-
-    /**
      * Returns last response content.
      *
      * @return string
@@ -272,7 +196,7 @@ class SahiDriver implements DriverInterface
     /**
      * Capture a screenshot of the current window.
      *
-     * @throws UnsupportedDriverActionException
+     * @throws RuntimeException
      */
     public function getScreenshot()
     {
@@ -403,7 +327,7 @@ JS;
     public function getValue($xpath)
     {
         $xpathEscaped = $this->prepareXPath($xpath);
-        
+
         $tag   = $this->getTagName($xpath);
         $type  = $this->getAttribute($xpath, 'type');
         $value = null;
@@ -708,24 +632,12 @@ JS;
      *
      * @param integer $time      time in milliseconds
      * @param string  $condition JS condition
+     *
+     * @return boolean
      */
     public function wait($time, $condition)
     {
-        $this->client->wait($time, $condition);
-    }
-
-    /**
-     * Set the dimensions of the window.
-     *
-     * @param integer $width set the window width, measured in pixels
-     * @param integer $height set the window height, measured in pixels
-     * @param string $name window name (null for the main window)
-     *
-     * @throws UnsupportedDriverActionException
-     */
-    public function resizeWindow($width, $height, $name = null)
-    {
-        throw new UnsupportedDriverActionException('Window resizing is not supported by %s', $this);
+        return $this->client->wait($time, $condition);
     }
 
     /**
