@@ -595,6 +595,16 @@ JS;
     }
 
     /**
+     * Submits the form.
+     *
+     * @param string $xpath Xpath.
+     */
+    public function submitForm($xpath)
+    {
+        $this->client->findByXPath($this->prepareXPath($xpath))->submitForm();
+    }
+
+    /**
      * Selects specific radio option.
      *
      * @param string $xpath xpath to one of the radio buttons
