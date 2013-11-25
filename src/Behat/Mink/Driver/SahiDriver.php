@@ -194,6 +194,52 @@ class SahiDriver extends CoreDriver
     }
 
     /**
+     * Capture a screenshot of the current window.
+     *
+     * @throws RuntimeException
+     */
+    public function getScreenshot()
+    {
+        $varname = '__screenshot_' . uniqid(true);
+
+        // mop: poor mans javascript code escaper :S
+        $html2canvasCode = json_encode(file_get_contents(__DIR__ . '/../../../../html2canvas.js'));
+
+        $function = <<<JS
+(function() {
+    var takeScreenShot = function() {
+        html2canvas(document.body, { onrendered:function(canvas) {
+            {$varname} = canvas.toDataURL('image/png');
+        }});
+    }
+    if (typeof html2canvas != 'function') {
+        var script = document.createElement('script');
+        script.text = {$html2canvasCode};
+        document.body.appendChild(script);
+    }
+    takeScreenShot();
+})()
+JS;
+        $this->client->getConnection()->executeJavascript($function, 5);
+
+        $this->wait(5000, 'typeof ' . $varname . ' == "string"');
+
+        $getter = <<<JS
+(function() {
+    setTimeout(function() {
+        delete {$varname};
+    }, 1);
+    return {$varname};
+})()
+JS;
+        $png = $this->evaluateScript($getter);
+        if (!preg_match('/^data:image\/png;base64,/', $png)) {
+            throw new \RuntimeException('Unexpected screenshot result ' . $png);
+        }
+        return base64_decode(substr($png, 22));
+    }
+
+    /**
      * Finds elements with specified XPath query.
      *
      * @param string $xpath
