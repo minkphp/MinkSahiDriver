@@ -10,10 +10,11 @@ before_script:
   - export DISPLAY=:99.0
   - sleep 4
 
-  - curl http://garr.dl.sourceforge.net/project/sahi/sahi-v43/20130206/sahi_20130206.zip > sahi.zip
+  - curl http://garr.dl.sourceforge.net/project/sahi/sahi-v44/sahi_20130429.zip > sahi.zip
   - unzip sahi.zip > /dev/null
+  - sed -i -e "s,<path>/usr/bin/firefox</path>,<path>/usr/local/bin/firefox</path>,g" sahi/config/browser_types/linux.xml
   - cd sahi/bin
-  - sh sahi.sh > /dev/null &
+  - sh sahi.sh > /tmp/sahi_output.log &
   - cd -
   - sleep 4
 
@@ -26,3 +27,6 @@ before_script:
   - sudo /etc/init.d/apache2 restart
 
 script: phpunit -v
+
+after_failure:
+  - cat /tmp/sahi_output.log
