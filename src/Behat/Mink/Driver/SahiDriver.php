@@ -315,26 +315,21 @@ JS;
         } elseif ('checkbox' === $type) {
             return $this->client->findByXPath($xpathEscaped)->isChecked();
         } elseif ('select' === $tag && 'multiple' === $this->getAttribute($xpath, 'multiple')) {
-            $name = $this->getAttribute($xpath, 'name');
-
             $function = <<<JS
 (function(){
-    for (var i = 0; i < document.forms.length; i++) {
-        if (document.forms[i].elements['{$name}']) {
-            var form = document.forms[i];
-            var node = form.elements['{$name}'];
-            var options = [];
-            for (var i = 0; i < node.options.length; i++) {
-                if (node.options[ i ].selected) {
-                    options.push(node.options[ i ].value);
-                }
+    var options = [],
+        node = _sahi._byXPath("({$xpathEscaped})[1]");
+
+        for (var i = 0; i < node.options.length; i++) {
+            if (node.options[ i ].selected) {
+                options.push(node.options[ i ].value);
             }
-            return options.join(",");
         }
-    }
-    return '';
+
+    return options.join(",");
 })()
 JS;
+
             $value = $this->evaluateScript($function);
 
             if ('' === $value || false === $value) {
