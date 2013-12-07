@@ -6,6 +6,8 @@ use Behat\Mink\Mink,
     Behat\Mink\Session;
 
 use Behat\Mink\Driver\SahiDriver;
+use Behat\SahiClient\Client;
+use Behat\SahiClient\Connection;
 
 /**
  * @group sahidriver
@@ -14,7 +16,9 @@ class SahiDriverTest extends JavascriptDriverTest
 {
     protected static function getDriver()
     {
-        return new SahiDriver($_SERVER['WEB_FIXTURES_BROWSER']);
+        $connection = new Connection(null, $_SERVER['DRIVER_HOST'], 9999);
+
+        return new SahiDriver($_SERVER['WEB_FIXTURES_BROWSER'], new Client($connection));
     }
 
     /**

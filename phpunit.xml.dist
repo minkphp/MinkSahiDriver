@@ -20,6 +20,7 @@
     <php>
         <!--server name="WEB_FIXTURES_HOST" value="http://test.mink.dev" /-->
         <!--server name="WEB_FIXTURES_BROWSER" value="firefox" /-->
+        <!--server name="DRIVER_HOST" value="localhost" /-->
     </php>
 
     <filter>
