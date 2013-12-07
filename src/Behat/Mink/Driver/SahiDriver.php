@@ -176,7 +176,9 @@ class SahiDriver extends CoreDriver
     public function getCookie($name)
     {
         try {
-            return urldecode($this->evaluateScript(sprintf('_sahi._cookie("%s")', $name)));
+            $cookieValue = $this->evaluateScript(sprintf('_sahi._cookie("%s")', $name));
+
+            return null === $cookieValue ? null : urldecode($cookieValue);
         } catch (ConnectionException $e) {}
     }
 
