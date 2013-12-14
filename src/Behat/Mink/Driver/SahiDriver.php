@@ -97,10 +97,24 @@ class SahiDriver extends CoreDriver
      */
     public function reset()
     {
+        $js = <<<JS
+(function(){
+    var path,
+        cookies = document.cookie.split('; ');
+
+    for (var i = 0; i < cookies.length && cookies[i]; i++) {
+        path = location.pathname;
+
+        do {
+            document.cookie = cookies[i] + '; path=' + path + '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+            path = path.replace(/.$/, '');
+        } while (path);
+    }
+})()
+JS;
+
         try {
-            $this->executeScript(
-                '(function(){var c=document.cookie.split(";");for(var i=0;i<c.length;i++){var e=c[i].indexOf("=");var n=e>-1?c[i].substr(0,e):c[i];document.cookie=n+"=;expires=Thu, 01 Jan 1970 00:00:00 GMT";}})()'
-            );
+            $this->executeScript($js);
         } catch(\Exception $e) {}
     }
 
@@ -157,13 +171,36 @@ class SahiDriver extends CoreDriver
     public function setCookie($name, $value = null)
     {
         if (null === $value) {
-            try {
-                $this->executeScript(sprintf('_sahi._deleteCookie("%s")', $name));
-            } catch (ConnectionException $e) {}
+            $this->deleteCookie($name);
         } else {
             $value = str_replace('"', '\\"', $value);
             $this->executeScript(sprintf('_sahi._createCookie("%s", "%s")', $name, $value));
         }
+    }
+
+    /**
+     * Deletes a cookie by name.
+     *
+     * @param string $name Cookie name.
+     */
+    protected function deleteCookie($name)
+    {
+        $nameEscaped = json_encode($name);
+
+        $js = <<<JS
+(function(){
+    var path = location.pathname;
+
+    do {
+        document.cookie = {$nameEscaped} + '=; path=' + path + '; expires=Thu, 01 Jan 1970 00:00:00 GMT';
+        path = path.replace(/.$/, '');
+    } while (path);
+})()
+JS;
+
+          try {
+              $this->executeScript($js);
+          } catch(\Exception $e) {}
     }
 
     /**
