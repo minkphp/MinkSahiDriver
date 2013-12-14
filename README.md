@@ -1,6 +1,8 @@
 Mink Sahi.JS Driver
 ===================
 
+[![Latest Stable Version](https://poser.pugx.org/behat/mink-sahi-driver/v/stable.png)](https://packagist.org/packages/behat/mink-sahi-driver)
+[![Total Downloads](https://poser.pugx.org/behat/mink-sahi-driver/downloads.png)](https://packagist.org/packages/behat/mink-sahi-driver)
 [![Build
 Status](https://travis-ci.org/Behat/MinkSahiDriver.png?branch=master)](https://travis-ci.org/Behat/MinkSahiDriver)
 
