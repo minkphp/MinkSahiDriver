@@ -2,11 +2,10 @@
 
 namespace Behat\Mink\Driver;
 
-use Behat\SahiClient\Client,
-    Behat\SahiClient\Exception\ConnectionException;
-
-use Behat\Mink\Session,
-    Behat\Mink\Element\NodeElement;
+use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Session;
+use Behat\SahiClient\Client;
+use Behat\SahiClient\Exception\ConnectionException;
 
 /*
  * This file is part of the Behat\Mink.
@@ -115,7 +114,9 @@ JS;
 
         try {
             $this->executeScript($js);
-        } catch(\Exception $e) {}
+        } catch (\Exception $e) {
+            // ignore error
+        }
     }
 
     /**
@@ -198,9 +199,11 @@ JS;
 })()
 JS;
 
-          try {
-              $this->executeScript($js);
-          } catch(\Exception $e) {}
+        try {
+            $this->executeScript($js);
+        } catch (\Exception $e) {
+            // ignore error
+        }
     }
 
     /**
@@ -216,7 +219,11 @@ JS;
             $cookieValue = $this->evaluateScript(sprintf('_sahi._cookie("%s")', $name));
 
             return null === $cookieValue ? null : urldecode($cookieValue);
-        } catch (ConnectionException $e) {}
+        } catch (ConnectionException $e) {
+            // ignore error
+        }
+
+        return null;
     }
 
     /**
@@ -558,9 +565,7 @@ JS;
      */
     public function keyPress($xpath, $char, $modifier = null)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->keyPress(
-            $char, strtoupper($modifier)
-        );
+        $this->client->findByXPath($this->prepareXPath($xpath))->keyPress($char, strtoupper($modifier));
     }
 
     /**
@@ -572,9 +577,7 @@ JS;
      */
     public function keyDown($xpath, $char, $modifier = null)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->keyDown(
-            $char, strtoupper($modifier)
-        );
+        $this->client->findByXPath($this->prepareXPath($xpath))->keyDown($char, strtoupper($modifier));
     }
 
     /**
@@ -586,9 +589,7 @@ JS;
      */
     public function keyUp($xpath, $char, $modifier = null)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->keyUp(
-            $char, strtoupper($modifier)
-        );
+        $this->client->findByXPath($this->prepareXPath($xpath))->keyUp($char, strtoupper($modifier));
     }
 
     /**

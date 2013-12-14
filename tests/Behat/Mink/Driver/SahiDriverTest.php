@@ -2,9 +2,6 @@
 
 namespace Tests\Behat\Mink\Driver;
 
-use Behat\Mink\Mink,
-    Behat\Mink\Session;
-
 use Behat\Mink\Driver\SahiDriver;
 use Behat\SahiClient\Client;
 use Behat\SahiClient\Connection;
@@ -37,9 +34,7 @@ class SahiDriverTest extends JavascriptDriverTest
         $driver = $this->getSession()->getDriver();
 
         // Make the method accessible for testing purposes
-        $method = new \ReflectionMethod(
-          'Behat\Mink\Driver\SahiDriver', 'prepareXPath'
-        );
+        $method = new \ReflectionMethod('Behat\Mink\Driver\SahiDriver', 'prepareXPath');
         $method->setAccessible(true);
 
         $this->assertEquals('No quotes', $method->invokeArgs($driver, array('No quotes')));
@@ -47,9 +42,13 @@ class SahiDriverTest extends JavascriptDriverTest
         $this->assertEquals('Double quote\"', $method->invokeArgs($driver, array('Double quote"')));
     }
 
-    // Sahi doesn't support iFrames switching
-    public function testIFrame() {}
+    public function testIFrame()
+    {
+        $this->markTestSkipped('Sahi doesn\'t support iFrames switching');
+    }
 
-    // Sahi doesn't support window switching
-    public function testWindow() {}
+    public function testWindow()
+    {
+        $this->markTestSkipped('Sahi doesn\'t support window switching');
+    }
 }
