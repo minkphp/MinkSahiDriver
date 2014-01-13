@@ -196,7 +196,7 @@ class SahiDriver extends CoreDriver
     /**
      * Capture a screenshot of the current window.
      *
-     * @throws RuntimeException
+     * @throws ScreenShotException
      */
     public function getScreenshot()
     {
@@ -234,7 +234,7 @@ JS;
 JS;
         $png = $this->evaluateScript($getter);
         if (!preg_match('/^data:image\/png;base64,/', $png)) {
-            throw new \RuntimeException('Unexpected screenshot result ' . $png);
+            throw new ScreenShotException('Unexpected screenshot result ' . $png);
         }
         return base64_decode(substr($png, 22));
     }
