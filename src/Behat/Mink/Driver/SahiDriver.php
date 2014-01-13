@@ -220,7 +220,11 @@ class SahiDriver extends CoreDriver
     takeScreenShot();
 })()
 JS;
-        $this->client->getConnection()->executeJavascript($function);
+        try {
+            $this->client->getConnection()->executeJavascript($function);
+        } catch (ConnectionException $e) {
+            throw new ScreenshotException($e->getMessage(), $e->getCode(), $e);
+        }
 
         $this->wait(5000, 'typeof ' . $varname . ' == "string"');
 
