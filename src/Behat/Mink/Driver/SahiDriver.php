@@ -220,7 +220,7 @@ class SahiDriver extends CoreDriver
     takeScreenShot();
 })()
 JS;
-        $this->client->getConnection()->executeJavascript($function, 5);
+        $this->client->getConnection()->executeJavascript($function);
 
         $this->wait(5000, 'typeof ' . $varname . ' == "string"');
 
