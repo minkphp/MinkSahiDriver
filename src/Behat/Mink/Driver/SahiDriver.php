@@ -238,7 +238,7 @@ JS;
 JS;
         $png = $this->evaluateScript($getter);
         if (!preg_match('/^data:image\/png;base64,/', $png)) {
-            throw new ScreenShotException('Unexpected screenshot result ' . $png);
+            throw new ScreenshotException('Unexpected screenshot result ' . $png);
         }
         return base64_decode(substr($png, 22));
     }
