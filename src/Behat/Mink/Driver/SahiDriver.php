@@ -8,6 +8,8 @@ use Behat\SahiClient\Client,
 use Behat\Mink\Session,
     Behat\Mink\Element\NodeElement;
 
+use Buzz\Exception\ClientException;
+
 /*
  * This file is part of the Behat\Mink.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
@@ -223,6 +225,8 @@ JS;
         try {
             $this->client->getConnection()->executeJavascript($function);
         } catch (ConnectionException $e) {
+            throw new ScreenshotException($e->getMessage(), $e->getCode(), $e);
+        } catch (ClientException $e) {
             throw new ScreenshotException($e->getMessage(), $e->getCode(), $e);
         }
 
