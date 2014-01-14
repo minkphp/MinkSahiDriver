@@ -226,7 +226,11 @@ JS;
             throw new ScreenshotException($e->getMessage(), $e->getCode(), $e);
         }
 
-        $this->wait(5000, 'typeof ' . $varname . ' == "string"');
+        $waitResult = $this->wait(5000, 'typeof ' . $varname . ' == "string"');
+
+        if (!$waitResult) {
+            throw new ScreenshotException('Screenshot generation timed out!');
+        }
 
         $getter = <<<JS
 (function() {
