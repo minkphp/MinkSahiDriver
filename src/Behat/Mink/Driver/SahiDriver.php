@@ -710,7 +710,7 @@ JS;
      */
     private function prepareXPath($xpath)
     {
-        return strtr($xpath, array('"' => '\\"'));
+        return substr(json_encode((string)$xpath), 1, -1);
     }
 
     /**
