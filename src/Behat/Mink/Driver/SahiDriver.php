@@ -659,7 +659,7 @@ JS;
      */
     private function selectRadioOption($xpath, $value)
     {
-        $name = $this->getAttribute($this->prepareXPath($xpath), 'name');
+        $name = $this->getAttribute($xpath, 'name');
 
         if (null !== $name) {
             $function = <<<JS
