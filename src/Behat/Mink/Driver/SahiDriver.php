@@ -359,7 +359,7 @@ JS;
                 return $this->evaluateScript($function);
             }
         } elseif ('checkbox' === $type) {
-            return $this->client->findByXPath($xpathEscaped)->isChecked();
+            return $this->isChecked($xpath);
         } elseif ('select' === $tag && 'multiple' === $this->getAttribute($xpath, 'multiple')) {
             $function = <<<JS
 (function(){
@@ -402,9 +402,9 @@ JS;
             $this->selectRadioOption($xpath, $value);
         } elseif ('checkbox' === $type) {
             if ((Boolean) $value) {
-                $this->client->findByXPath($this->prepareXPath($xpath))->check();
+                $this->check($xpath);
             } else {
-                $this->client->findByXPath($this->prepareXPath($xpath))->uncheck();
+                $this->uncheck($xpath);
             }
         } else {
             $this->client->findByXPath($this->prepareXPath($xpath))->setValue($value);
@@ -710,7 +710,7 @@ JS;
      */
     private function prepareXPath($xpath)
     {
-        return strtr($xpath, array('"' => '\\"'));
+        return substr(json_encode((string)$xpath), 1, -1);
     }
 
     /**

@@ -29,7 +29,10 @@ class SahiDriverTest extends JavascriptDriverTest
         $page->selectFieldOption('foobar', 'Gimme some accentués characters');
     }
 
-    public function testPrepareXPath()
+    /**
+     * @dataProvider prepareXPathDataProvider
+     */
+    public function testPrepareXPath($expected, $input)
     {
         $driver = $this->getSession()->getDriver();
 
@@ -37,9 +40,17 @@ class SahiDriverTest extends JavascriptDriverTest
         $method = new \ReflectionMethod('Behat\Mink\Driver\SahiDriver', 'prepareXPath');
         $method->setAccessible(true);
 
-        $this->assertEquals('No quotes', $method->invokeArgs($driver, array('No quotes')));
-        $this->assertEquals("Single quote'", $method->invokeArgs($driver, array("Single quote'")));
-        $this->assertEquals('Double quote\"', $method->invokeArgs($driver, array('Double quote"')));
+        $this->assertEquals($expected, $method->invokeArgs($driver, array($input)));
+    }
+
+    public function prepareXPathDataProvider()
+    {
+        return array(
+            array('No quotes', 'No quotes'),
+            array("Single quote'", "Single quote'"),
+            array('Double quote\"', 'Double quote"'),
+            array('Multi\nline', "Multi\nline"),
+        );
     }
 
     public function testIFrame()
