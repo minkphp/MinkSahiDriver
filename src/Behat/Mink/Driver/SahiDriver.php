@@ -275,7 +275,7 @@ JS;
      */
     public function getTagName($xpath)
     {
-        return strtolower($this->client->findByXPath($this->prepareXPath($xpath))->getName());
+        return strtolower($this->client->findByXPath($xpath)->getName());
     }
 
     /**
@@ -288,7 +288,7 @@ JS;
     public function getText($xpath)
     {
         return $this->removeSahiInjectionFromText(
-            $this->client->findByXPath($this->prepareXPath($xpath))->getText()
+            $this->client->findByXPath($xpath)->getText()
         );
     }
 
@@ -301,7 +301,7 @@ JS;
      */
     public function getHtml($xpath)
     {
-        return $this->client->findByXPath($this->prepareXPath($xpath))->getHTML();
+        return $this->client->findByXPath($xpath)->getHTML();
     }
 
     /**
@@ -314,7 +314,7 @@ JS;
      */
     public function getAttribute($xpath, $name)
     {
-        return $this->client->findByXPath($this->prepareXPath($xpath))->getAttr($name);
+        return $this->client->findByXPath($xpath)->getAttr($name);
     }
 
     /**
@@ -326,8 +326,6 @@ JS;
      */
     public function getValue($xpath)
     {
-        $xpathEscaped = $this->prepareXPath($xpath);
-
         $tag   = $this->getTagName($xpath);
         $type  = $this->getAttribute($xpath, 'type');
         $value = null;
@@ -361,6 +359,8 @@ JS;
         } elseif ('checkbox' === $type) {
             return $this->isChecked($xpath);
         } elseif ('select' === $tag && 'multiple' === $this->getAttribute($xpath, 'multiple')) {
+            $xpathEscaped = $this->prepareXPath($xpath);
+
             $function = <<<JS
 (function(){
     var options = [],
@@ -380,12 +380,12 @@ JS;
 
             if ('' === $value || false === $value) {
                 return array();
-            } else {
-                return explode(',', $value);
             }
+
+            return explode(',', $value);
         }
 
-        return $this->client->findByXPath($xpathEscaped)->getValue();
+        return $this->client->findByXPath($xpath)->getValue();
     }
 
     /**
@@ -401,13 +401,13 @@ JS;
         if ('radio' === $type) {
             $this->selectRadioOption($xpath, $value);
         } elseif ('checkbox' === $type) {
-            if ((Boolean) $value) {
+            if ((boolean) $value) {
                 $this->check($xpath);
             } else {
                 $this->uncheck($xpath);
             }
         } else {
-            $this->client->findByXPath($this->prepareXPath($xpath))->setValue($value);
+            $this->client->findByXPath($xpath)->setValue($value);
         }
     }
 
@@ -418,7 +418,7 @@ JS;
      */
     public function check($xpath)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->check();
+        $this->client->findByXPath($xpath)->check();
     }
 
     /**
@@ -428,7 +428,7 @@ JS;
      */
     public function uncheck($xpath)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->uncheck();
+        $this->client->findByXPath($xpath)->uncheck();
     }
 
     /**
@@ -440,7 +440,7 @@ JS;
      */
     public function isChecked($xpath)
     {
-        return $this->client->findByXPath($this->prepareXPath($xpath))->isChecked();
+        return $this->client->findByXPath($xpath)->isChecked();
     }
 
     /**
@@ -457,7 +457,7 @@ JS;
         if ('radio' === $type) {
             $this->selectRadioOption($xpath, $value);
         } else {
-            $this->client->findByXPath($this->prepareXPath($xpath))->choose($value, $multiple);
+            $this->client->findByXPath($xpath)->choose($value, $multiple);
         }
     }
 
@@ -470,7 +470,7 @@ JS;
      */
     public function isSelected($xpath)
     {
-        return $this->client->findByXPath($this->prepareXPath($xpath))->isSelected();
+        return $this->client->findByXPath($xpath)->isSelected();
     }
 
     /**
@@ -480,7 +480,7 @@ JS;
      */
     public function click($xpath)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->click();
+        $this->client->findByXPath($xpath)->click();
     }
 
     /**
@@ -490,7 +490,7 @@ JS;
      */
     public function doubleClick($xpath)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->doubleClick();
+        $this->client->findByXPath($xpath)->doubleClick();
     }
 
     /**
@@ -500,7 +500,7 @@ JS;
      */
     public function rightClick($xpath)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->rightClick();
+        $this->client->findByXPath($xpath)->rightClick();
     }
 
     /**
@@ -511,7 +511,7 @@ JS;
      */
     public function attachFile($xpath, $path)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->setFile($path);
+        $this->client->findByXPath($xpath)->setFile($path);
     }
 
     /**
@@ -523,7 +523,7 @@ JS;
      */
     public function isVisible($xpath)
     {
-        return $this->client->findByXPath($this->prepareXPath($xpath))->isVisible();
+        return $this->client->findByXPath($xpath)->isVisible();
     }
 
     /**
@@ -533,7 +533,7 @@ JS;
      */
     public function mouseOver($xpath)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->mouseOver();
+        $this->client->findByXPath($xpath)->mouseOver();
     }
 
     /**
@@ -543,7 +543,7 @@ JS;
      */
     public function focus($xpath)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->focus();
+        $this->client->findByXPath($xpath)->focus();
     }
 
     /**
@@ -553,7 +553,7 @@ JS;
      */
     public function blur($xpath)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->blur();
+        $this->client->findByXPath($xpath)->blur();
     }
 
     /**
@@ -565,7 +565,7 @@ JS;
      */
     public function keyPress($xpath, $char, $modifier = null)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->keyPress($char, strtoupper($modifier));
+        $this->client->findByXPath($xpath)->keyPress($char, strtoupper($modifier));
     }
 
     /**
@@ -577,7 +577,7 @@ JS;
      */
     public function keyDown($xpath, $char, $modifier = null)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->keyDown($char, strtoupper($modifier));
+        $this->client->findByXPath($xpath)->keyDown($char, strtoupper($modifier));
     }
 
     /**
@@ -589,7 +589,7 @@ JS;
      */
     public function keyUp($xpath, $char, $modifier = null)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->keyUp($char, strtoupper($modifier));
+        $this->client->findByXPath($xpath)->keyUp($char, strtoupper($modifier));
     }
 
     /**
@@ -600,8 +600,8 @@ JS;
      */
     public function dragTo($sourceXpath, $destinationXpath)
     {
-        $from = $this->client->findByXPath($this->prepareXPath($sourceXpath));
-        $to   = $this->client->findByXPath($this->prepareXPath($destinationXpath));
+        $from = $this->client->findByXPath($sourceXpath);
+        $to   = $this->client->findByXPath($destinationXpath);
 
         $from->dragDrop($to);
     }
@@ -648,7 +648,7 @@ JS;
      */
     public function submitForm($xpath)
     {
-        $this->client->findByXPath($this->prepareXPath($xpath))->submitForm();
+        $this->client->findByXPath($xpath)->submitForm();
     }
 
     /**
