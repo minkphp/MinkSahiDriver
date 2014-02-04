@@ -625,6 +625,9 @@ JS;
      */
     public function evaluateScript($script)
     {
+        $script = preg_replace('/^return\s+/', '', $script);
+        $script = preg_replace('/;$/', '', $script);
+
         return $this->client->getConnection()->evaluateJavascript($script);
     }
 
