@@ -613,6 +613,8 @@ JS;
      */
     public function executeScript($script)
     {
+        $script = $this->prepareScript($script);
+
         $this->client->getConnection()->executeJavascript($script);
     }
 
@@ -625,8 +627,7 @@ JS;
      */
     public function evaluateScript($script)
     {
-        $script = preg_replace('/^return\s+/', '', $script);
-        $script = preg_replace('/;$/', '', $script);
+        $script = $this->prepareScript($script);
 
         return $this->client->getConnection()->evaluateJavascript($script);
     }
@@ -714,6 +715,21 @@ JS;
     private function prepareXPath($xpath)
     {
         return substr(json_encode((string)$xpath), 1, -1);
+    }
+
+    /**
+     * Prepare script to be sent via Sahi proxy.
+     *
+     * @param string $script
+     *
+     * @return string
+     */
+    private function prepareScript($script)
+    {
+        $script = preg_replace('/^return\s+/', '', $script);
+        $script = preg_replace('/;$/', '', $script);
+
+        return $script;
     }
 
     /**
