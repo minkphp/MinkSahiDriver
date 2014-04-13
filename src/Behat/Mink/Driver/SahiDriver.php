@@ -635,14 +635,14 @@ JS;
     /**
      * Waits some time or until JS condition turns true.
      *
-     * @param integer $time      time in milliseconds
+     * @param integer $timeout   timeout in milliseconds
      * @param string  $condition JS condition
      *
      * @return boolean
      */
-    public function wait($time, $condition)
+    public function wait($timeout, $condition)
     {
-        return $this->client->wait($time, $condition);
+        return $this->client->wait($timeout, $condition);
     }
 
     /**
