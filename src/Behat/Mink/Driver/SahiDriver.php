@@ -1,12 +1,5 @@
 <?php
 
-namespace Behat\Mink\Driver;
-
-use Behat\Mink\Element\NodeElement;
-use Behat\Mink\Session;
-use Behat\SahiClient\Client;
-use Behat\SahiClient\Exception\ConnectionException;
-
 /*
  * This file is part of the Behat\Mink.
  * (c) Konstantin Kudryashov <ever.zet@gmail.com>
@@ -14,6 +7,13 @@ use Behat\SahiClient\Exception\ConnectionException;
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+namespace Behat\Mink\Driver;
+
+use Behat\Mink\Element\NodeElement;
+use Behat\Mink\Session;
+use Behat\SahiClient\Client;
+use Behat\SahiClient\Exception\ConnectionException;
 
 /**
  * Sahi (JS) driver.
@@ -54,9 +54,7 @@ class SahiDriver extends CoreDriver
     }
 
     /**
-     * Sets driver's current session.
-     *
-     * @param Session $session
+     * {@inheritdoc}
      */
     public function setSession(Session $session)
     {
@@ -64,7 +62,7 @@ class SahiDriver extends CoreDriver
     }
 
     /**
-     * Starts driver.
+     * {@inheritdoc}
      */
     public function start()
     {
@@ -73,9 +71,7 @@ class SahiDriver extends CoreDriver
     }
 
     /**
-     * Checks whether driver is started.
-     *
-     * @return Boolean
+     * {@inheritdoc}
      */
     public function isStarted()
     {
@@ -83,7 +79,7 @@ class SahiDriver extends CoreDriver
     }
 
     /**
-     * Stops driver.
+     * {@inheritdoc}
      */
     public function stop()
     {
@@ -92,7 +88,7 @@ class SahiDriver extends CoreDriver
     }
 
     /**
-     * Resets driver.
+     * {@inheritdoc}
      */
     public function reset()
     {
@@ -120,9 +116,7 @@ JS;
     }
 
     /**
-     * Visit specified URL.
-     *
-     * @param string $url url of the page
+     * {@inheritdoc}
      */
     public function visit($url)
     {
@@ -130,9 +124,7 @@ JS;
     }
 
     /**
-     * Returns current URL address.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getCurrentUrl()
     {
@@ -140,7 +132,7 @@ JS;
     }
 
     /**
-     * Reloads current page.
+     * {@inheritdoc}
      */
     public function reload()
     {
@@ -148,7 +140,7 @@ JS;
     }
 
     /**
-     * Moves browser forward 1 page.
+     * {@inheritdoc}
      */
     public function forward()
     {
@@ -156,7 +148,7 @@ JS;
     }
 
     /**
-     * Moves browser backward 1 page.
+     * {@inheritdoc}
      */
     public function back()
     {
@@ -164,10 +156,7 @@ JS;
     }
 
     /**
-     * Sets cookie.
-     *
-     * @param string $name
-     * @param string $value
+     * {@inheritdoc}
      */
     public function setCookie($name, $value = null)
     {
@@ -207,11 +196,7 @@ JS;
     }
 
     /**
-     * Returns cookie by name.
-     *
-     * @param string $name
-     *
-     * @return string|null
+     * {@inheritdoc}
      */
     public function getCookie($name)
     {
@@ -227,9 +212,7 @@ JS;
     }
 
     /**
-     * Returns last response content.
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getContent()
     {
@@ -240,11 +223,7 @@ JS;
     }
 
     /**
-     * Finds elements with specified XPath query.
-     *
-     * @param string $xpath
-     *
-     * @return array array of NodeElements
+     * {@inheritdoc}
      */
     public function find($xpath)
     {
@@ -267,11 +246,7 @@ JS;
     }
 
     /**
-     * Returns element's tag name by it's XPath query.
-     *
-     * @param string $xpath
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getTagName($xpath)
     {
@@ -279,11 +254,7 @@ JS;
     }
 
     /**
-     * Returns element's text by it's XPath query.
-     *
-     * @param string $xpath
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getText($xpath)
     {
@@ -293,11 +264,7 @@ JS;
     }
 
     /**
-     * Returns element's html by it's XPath query.
-     *
-     * @param string $xpath
-     *
-     * @return string
+     * {@inheritdoc}
      */
     public function getHtml($xpath)
     {
@@ -305,12 +272,7 @@ JS;
     }
 
     /**
-     * Returns element's attribute by it's XPath query.
-     *
-     * @param string $xpath
-     * @param string $name
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getAttribute($xpath, $name)
     {
@@ -318,11 +280,7 @@ JS;
     }
 
     /**
-     * Returns element's value by it's XPath query.
-     *
-     * @param string $xpath
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function getValue($xpath)
     {
@@ -389,10 +347,7 @@ JS;
     }
 
     /**
-     * Sets element's value by it's XPath query.
-     *
-     * @param string $xpath
-     * @param string $value
+     * {@inheritdoc}
      */
     public function setValue($xpath, $value)
     {
@@ -412,9 +367,7 @@ JS;
     }
 
     /**
-     * Checks checkbox by it's XPath query.
-     *
-     * @param string $xpath
+     * {@inheritdoc}
      */
     public function check($xpath)
     {
@@ -422,9 +375,7 @@ JS;
     }
 
     /**
-     * Unchecks checkbox by it's XPath query.
-     *
-     * @param string $xpath
+     * {@inheritdoc}
      */
     public function uncheck($xpath)
     {
@@ -432,11 +383,7 @@ JS;
     }
 
     /**
-     * Checks whether checkbox checked located by it's XPath query.
-     *
-     * @param string $xpath
-     *
-     * @return Boolean
+     * {@inheritdoc}
      */
     public function isChecked($xpath)
     {
@@ -444,11 +391,7 @@ JS;
     }
 
     /**
-     * Selects option from select field located by it's XPath query.
-     *
-     * @param string  $xpath
-     * @param string  $value
-     * @param Boolean $multiple
+     * {@inheritdoc}
      */
     public function selectOption($xpath, $value, $multiple = false)
     {
@@ -462,11 +405,7 @@ JS;
     }
 
     /**
-     * Checks whether select option, located by it's XPath query, is selected.
-     *
-     * @param string $xpath
-     *
-     * @return Boolean
+     * {@inheritdoc}
      */
     public function isSelected($xpath)
     {
@@ -474,9 +413,7 @@ JS;
     }
 
     /**
-     * Clicks button or link located by it's XPath query.
-     *
-     * @param string $xpath
+     * {@inheritdoc}
      */
     public function click($xpath)
     {
@@ -484,9 +421,7 @@ JS;
     }
 
     /**
-     * Double-clicks button or link located by it's XPath query.
-     *
-     * @param string $xpath
+     * {@inheritdoc}
      */
     public function doubleClick($xpath)
     {
@@ -494,9 +429,7 @@ JS;
     }
 
     /**
-     * Right-clicks button or link located by it's XPath query.
-     *
-     * @param string $xpath
+     * {@inheritdoc}
      */
     public function rightClick($xpath)
     {
@@ -504,10 +437,7 @@ JS;
     }
 
     /**
-     * Attaches file path to file field located by it's XPath query.
-     *
-     * @param string $xpath
-     * @param string $path
+     * {@inheritdoc}
      */
     public function attachFile($xpath, $path)
     {
@@ -515,11 +445,7 @@ JS;
     }
 
     /**
-     * Checks whether element visible located by it's XPath query.
-     *
-     * @param string $xpath
-     *
-     * @return Boolean
+     * {@inheritdoc}
      */
     public function isVisible($xpath)
     {
@@ -527,9 +453,7 @@ JS;
     }
 
     /**
-     * Simulates a mouse over on the element.
-     *
-     * @param string $xpath
+     * {@inheritdoc}
      */
     public function mouseOver($xpath)
     {
@@ -537,9 +461,7 @@ JS;
     }
 
     /**
-     * Brings focus to element.
-     *
-     * @param string $xpath
+     * {@inheritdoc}
      */
     public function focus($xpath)
     {
@@ -547,9 +469,7 @@ JS;
     }
 
     /**
-     * Removes focus from element.
-     *
-     * @param string $xpath
+     * {@inheritdoc}
      */
     public function blur($xpath)
     {
@@ -557,11 +477,7 @@ JS;
     }
 
     /**
-     * Presses specific keyboard key.
-     *
-     * @param string $xpath
-     * @param mixed  $char     could be either char ('b') or char-code (98)
-     * @param string $modifier keyboard modifier (could be 'ctrl', 'alt', 'shift' or 'meta')
+     * {@inheritdoc}
      */
     public function keyPress($xpath, $char, $modifier = null)
     {
@@ -569,11 +485,7 @@ JS;
     }
 
     /**
-     * Pressed down specific keyboard key.
-     *
-     * @param string $xpath
-     * @param mixed  $char     could be either char ('b') or char-code (98)
-     * @param string $modifier keyboard modifier (could be 'ctrl', 'alt', 'shift' or 'meta')
+     * {@inheritdoc}
      */
     public function keyDown($xpath, $char, $modifier = null)
     {
@@ -581,11 +493,7 @@ JS;
     }
 
     /**
-     * Pressed up specific keyboard key.
-     *
-     * @param string $xpath
-     * @param mixed  $char     could be either char ('b') or char-code (98)
-     * @param string $modifier keyboard modifier (could be 'ctrl', 'alt', 'shift' or 'meta')
+     * {@inheritdoc}
      */
     public function keyUp($xpath, $char, $modifier = null)
     {
@@ -593,10 +501,7 @@ JS;
     }
 
     /**
-     * Drag one element onto another.
-     *
-     * @param string $sourceXpath
-     * @param string $destinationXpath
+     * {@inheritdoc}
      */
     public function dragTo($sourceXpath, $destinationXpath)
     {
@@ -607,9 +512,7 @@ JS;
     }
 
     /**
-     * Executes JS script.
-     *
-     * @param string $script
+     * {@inheritdoc}
      */
     public function executeScript($script)
     {
@@ -619,11 +522,7 @@ JS;
     }
 
     /**
-     * Evaluates JS script.
-     *
-     * @param string $script
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
     public function evaluateScript($script)
     {
@@ -633,12 +532,7 @@ JS;
     }
 
     /**
-     * Waits some time or until JS condition turns true.
-     *
-     * @param integer $timeout   timeout in milliseconds
-     * @param string  $condition JS condition
-     *
-     * @return boolean
+     * {@inheritdoc}
      */
     public function wait($timeout, $condition)
     {
@@ -646,9 +540,7 @@ JS;
     }
 
     /**
-     * Submits the form.
-     *
-     * @param string $xpath Xpath.
+     * {@inheritdoc}
      */
     public function submitForm($xpath)
     {
