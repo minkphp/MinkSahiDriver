@@ -205,7 +205,7 @@ JS;
             $cookieValue = $this->evaluateScript(sprintf('_sahi._cookie("%s")', $name));
 
             return null === $cookieValue ? null : urldecode($cookieValue);
-        } catch (ConnectionException $e) {
+        } catch (DriverException $e) {
             // ignore error
         }
 
