@@ -164,8 +164,7 @@ JS;
         if (null === $value) {
             $this->deleteCookie($name);
         } else {
-            $value = str_replace('"', '\\"', $value);
-            $this->executeScript(sprintf('_sahi._createCookie("%s", "%s")', $name, $value));
+            $this->executeScript(sprintf('_sahi._createCookie(%s, %s)', json_encode($name), json_encode($value)));
         }
     }
 
@@ -202,7 +201,7 @@ JS;
     public function getCookie($name)
     {
         try {
-            $cookieValue = $this->evaluateScript(sprintf('_sahi._cookie("%s")', $name));
+            $cookieValue = $this->evaluateScript(sprintf('_sahi._cookie(%s)', json_encode($name)));
 
             return null === $cookieValue ? null : urldecode($cookieValue);
         } catch (DriverException $e) {
@@ -228,11 +227,11 @@ JS;
      */
     public function find($xpath)
     {
-        $jsXpath = $this->prepareXPath($xpath);
+        $jsXpath = json_encode($xpath);
         $function = <<<JS
 (function(){
     var count = 0;
-    while (_sahi._byXPath("({$jsXpath})["+(count+1)+"]")) count++;
+    while (_sahi._byXPath("("+{$jsXpath}+")["+(count+1)+"]")) count++;
     return count;
 })()
 JS;
@@ -309,12 +308,13 @@ JS;
             $name = $this->getAttribute($xpath, 'name');
 
             if (null !== $name) {
+                $name = json_encode($name);
                 $function = <<<JS
 (function(){
     for (var i = 0; i < document.forms.length; i++) {
-        if (document.forms[i].elements['{$name}']) {
+        if (document.forms[i].elements[{$name}]) {
             var form  = document.forms[i];
-            var elements = form.elements['{$name}'];
+            var elements = form.elements[{$name}];
             var value = elements[0].value;
             for (var f = 0; f < elements.length; f++) {
                 var item = elements[f];
@@ -334,12 +334,12 @@ JS;
         } elseif ('checkbox' === $type) {
             return $this->isChecked($xpath);
         } elseif ('select' === $tag && 'multiple' === $this->getAttribute($xpath, 'multiple')) {
-            $xpathEscaped = $this->prepareXPath($xpath);
+            $xpathEscaped = json_encode(sprintf('(%s)[1]', $xpath));
 
             $function = <<<JS
 (function(){
     var options = [],
-        node = _sahi._byXPath("({$xpathEscaped})[1]");
+        node = _sahi._byXPath({$xpathEscaped});
 
         for (var i = 0; i < node.options.length; i++) {
             if (node.options[ i ].selected) {
@@ -663,13 +663,13 @@ JS;
         $name = $this->getAttribute($xpath, 'name');
 
         if (null !== $name) {
+            $name = json_encode($name);
             $function = <<<JS
 (function(){
     for (var i = 0; i < document.forms.length; i++) {
-        if (document.forms[i].elements['{$name}']) {
+        if (document.forms[i].elements[{$name}]) {
             var form  = document.forms[i];
-            var elements = form.elements['{$name}'];
-            var value = elements[0].value;
+            var elements = form.elements[{$name}];
             for (var f = 0; f < elements.length; f++) {
                 var item = elements[f];
                 if ("{$value}" == item.value) {
@@ -700,18 +700,6 @@ JS;
 
             $this->executeScript($function);
         }
-    }
-
-    /**
-     * Prepare XPath to be sent via Sahi proxy.
-     *
-     * @param string $xpath
-     *
-     * @return string
-     */
-    private function prepareXPath($xpath)
-    {
-        return substr(json_encode((string)$xpath), 1, -1);
     }
 
     /**
