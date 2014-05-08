@@ -286,6 +286,18 @@ JS;
     /**
      * {@inheritdoc}
      */
+    public function getOuterHtml($xpath)
+    {
+        try {
+            return $this->client->findByXPath($xpath)->getOuterHTML();
+        } catch (ConnectionException $e) {
+            throw new DriverException('An error happened while getting the outer HTML', 0, $e);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getAttribute($xpath, $name)
     {
         try {
