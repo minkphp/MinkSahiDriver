@@ -33,8 +33,8 @@ Installation
 ``` json
 {
     "require": {
-        "behat/mink":              "1.4.*",
-        "behat/mink-sahi-driver":  "1.0.*"
+        "behat/mink":              "~1.5",
+        "behat/mink-sahi-driver":  "~1.1"
     }
 }
 ```
