@@ -250,11 +250,7 @@ JS;
      */
     public function getTagName($xpath)
     {
-        try {
-            return strtolower($this->client->findByXPath($xpath)->getName());
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while getting the tag name', 0, $e);
-        }
+        return strtolower($this->client->findByXPath($xpath)->getName());
     }
 
     /**
@@ -262,13 +258,9 @@ JS;
      */
     public function getText($xpath)
     {
-        try {
-            return $this->removeSahiInjectionFromText(
-                $this->client->findByXPath($xpath)->getText()
-            );
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while getting the text', 0, $e);
-        }
+        return $this->removeSahiInjectionFromText(
+            $this->client->findByXPath($xpath)->getText()
+        );
     }
 
     /**
@@ -276,11 +268,7 @@ JS;
      */
     public function getHtml($xpath)
     {
-        try {
-            return $this->client->findByXPath($xpath)->getHTML();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while getting the HTML', 0, $e);
-        }
+        return $this->client->findByXPath($xpath)->getHTML();
     }
 
     /**
@@ -288,11 +276,7 @@ JS;
      */
     public function getOuterHtml($xpath)
     {
-        try {
-            return $this->client->findByXPath($xpath)->getOuterHTML();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while getting the outer HTML', 0, $e);
-        }
+        return $this->client->findByXPath($xpath)->getOuterHTML();
     }
 
     /**
@@ -300,11 +284,7 @@ JS;
      */
     public function getAttribute($xpath, $name)
     {
-        try {
-            return $this->client->findByXPath($xpath)->getAttr($name);
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while getting the attribute', 0, $e);
-        }
+        return $this->client->findByXPath($xpath)->getAttr($name);
     }
 
     /**
@@ -372,11 +352,7 @@ JS;
             return explode(',', $value);
         }
 
-        try {
-            return $this->client->findByXPath($xpath)->getValue();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while getting the value', 0, $e);
-        }
+        return $this->client->findByXPath($xpath)->getValue();
     }
 
     /**
@@ -395,11 +371,7 @@ JS;
                 $this->uncheck($xpath);
             }
         } else {
-            try {
-                $this->client->findByXPath($xpath)->setValue($value);
-            } catch (ConnectionException $e) {
-                throw new DriverException('An error happened while setting the value', 0, $e);
-            }
+            $this->client->findByXPath($xpath)->setValue($value);
         }
     }
 
@@ -408,11 +380,7 @@ JS;
      */
     public function check($xpath)
     {
-        try {
-            $this->client->findByXPath($xpath)->check();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while checking the checkbox', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->check();
     }
 
     /**
@@ -420,11 +388,7 @@ JS;
      */
     public function uncheck($xpath)
     {
-        try {
-            $this->client->findByXPath($xpath)->uncheck();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while unchecking the checkbox', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->uncheck();
     }
 
     /**
@@ -432,11 +396,7 @@ JS;
      */
     public function isChecked($xpath)
     {
-        try {
-            return $this->client->findByXPath($xpath)->isChecked();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while getting the state of the checkbox', 0, $e);
-        }
+        return $this->client->findByXPath($xpath)->isChecked();
     }
 
     /**
@@ -449,11 +409,7 @@ JS;
         if ('radio' === $type) {
             $this->selectRadioOption($xpath, $value);
         } else {
-            try {
-                $this->client->findByXPath($xpath)->choose($value, $multiple);
-            } catch (ConnectionException $e) {
-                throw new DriverException('An error happened while choosing an option', 0, $e);
-            }
+            $this->client->findByXPath($xpath)->choose($value, $multiple);
         }
     }
 
@@ -462,11 +418,7 @@ JS;
      */
     public function isSelected($xpath)
     {
-        try {
-            return $this->client->findByXPath($xpath)->isSelected();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while getting the state of an option', 0, $e);
-        }
+        return $this->client->findByXPath($xpath)->isSelected();
     }
 
     /**
@@ -474,11 +426,7 @@ JS;
      */
     public function click($xpath)
     {
-        try {
-            $this->client->findByXPath($xpath)->click();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while clicking', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->click();
     }
 
     /**
@@ -486,11 +434,7 @@ JS;
      */
     public function doubleClick($xpath)
     {
-        try {
-            $this->client->findByXPath($xpath)->doubleClick();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while double clicking', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->doubleClick();
     }
 
     /**
@@ -498,11 +442,7 @@ JS;
      */
     public function rightClick($xpath)
     {
-        try {
-            $this->client->findByXPath($xpath)->rightClick();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while right clicking', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->rightClick();
     }
 
     /**
@@ -510,11 +450,7 @@ JS;
      */
     public function attachFile($xpath, $path)
     {
-        try {
-            $this->client->findByXPath($xpath)->setFile($path);
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while setting the file', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->setFile($path);
     }
 
     /**
@@ -522,11 +458,7 @@ JS;
      */
     public function isVisible($xpath)
     {
-        try {
-            return $this->client->findByXPath($xpath)->isVisible();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while getting the visibility', 0, $e);
-        }
+        return $this->client->findByXPath($xpath)->isVisible();
     }
 
     /**
@@ -534,11 +466,7 @@ JS;
      */
     public function mouseOver($xpath)
     {
-        try {
-            $this->client->findByXPath($xpath)->mouseOver();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while mouving the mouse over the element', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->mouseOver();
     }
 
     /**
@@ -546,11 +474,7 @@ JS;
      */
     public function focus($xpath)
     {
-        try {
-            $this->client->findByXPath($xpath)->focus();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while focusing the element', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->focus();
     }
 
     /**
@@ -558,11 +482,7 @@ JS;
      */
     public function blur($xpath)
     {
-        try {
-            $this->client->findByXPath($xpath)->blur();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while blurring the element', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->blur();
     }
 
     /**
@@ -570,11 +490,7 @@ JS;
      */
     public function keyPress($xpath, $char, $modifier = null)
     {
-        try {
-            $this->client->findByXPath($xpath)->keyPress($char, strtoupper($modifier));
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while pressing a key', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->keyPress($char, strtoupper($modifier));
     }
 
     /**
@@ -582,11 +498,7 @@ JS;
      */
     public function keyDown($xpath, $char, $modifier = null)
     {
-        try {
-            $this->client->findByXPath($xpath)->keyDown($char, strtoupper($modifier));
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while pressing a key', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->keyDown($char, strtoupper($modifier));
     }
 
     /**
@@ -594,11 +506,7 @@ JS;
      */
     public function keyUp($xpath, $char, $modifier = null)
     {
-        try {
-            $this->client->findByXPath($xpath)->keyUp($char, strtoupper($modifier));
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while pressing a key', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->keyUp($char, strtoupper($modifier));
     }
 
     /**
@@ -609,11 +517,7 @@ JS;
         $from = $this->client->findByXPath($sourceXpath);
         $to   = $this->client->findByXPath($destinationXpath);
 
-        try {
-            $from->dragDrop($to);
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while dragging the element', 0, $e);
-        }
+        $from->dragDrop($to);
     }
 
     /**
@@ -623,11 +527,7 @@ JS;
     {
         $script = $this->prepareScript($script);
 
-        try {
-            $this->client->getConnection()->executeJavascript($script);
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while executing the script', 0, $e);
-        }
+        $this->client->getConnection()->executeJavascript($script);
     }
 
     /**
@@ -637,11 +537,7 @@ JS;
     {
         $script = $this->prepareScript($script);
 
-        try {
-            return $this->client->getConnection()->evaluateJavascript($script);
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while evaluating the script', 0, $e);
-        }
+        return $this->client->getConnection()->evaluateJavascript($script);
     }
 
     /**
@@ -657,11 +553,7 @@ JS;
      */
     public function submitForm($xpath)
     {
-        try {
-            $this->client->findByXPath($xpath)->submitForm();
-        } catch (ConnectionException $e) {
-            throw new DriverException('An error happened while submitting the form', 0, $e);
-        }
+        $this->client->findByXPath($xpath)->submitForm();
     }
 
     /**
