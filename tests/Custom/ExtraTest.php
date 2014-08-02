@@ -13,7 +13,7 @@ class ExtraTest extends TestCase
     public function testIssue32()
     {
         $session = $this->getSession();
-        $session->visit($this->pathTo('/advanced_form.php'));
+        $session->visit($this->pathTo('/advanced_form.html'));
         $page = $session->getPage();
 
         $sex = $page->find('xpath', '//*[@name = "sex"]' . "\n|\n" . '//*[@id = "sex"]');
