@@ -324,7 +324,8 @@ JS;
                 return $this->evaluateScript($function);
             }
         } elseif ('checkbox' === $type) {
-            return $this->isChecked($xpath);
+            $checkbox = $this->client->findByXPath($xpath);
+            return $checkbox->isChecked() ? $checkbox->getValue() : null;
         } elseif ('select' === $tag && 'multiple' === $this->getAttribute($xpath, 'multiple')) {
             $xpathEscaped = json_encode(sprintf('(%s)[1]', $xpath));
 
