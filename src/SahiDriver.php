@@ -14,7 +14,6 @@ use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\DriverException;
 use Behat\Mink\Session;
 use Behat\SahiClient\Client;
-use Behat\SahiClient\Exception\ConnectionException;
 
 /**
  * Sahi (JS) driver.
@@ -294,7 +293,6 @@ JS;
     {
         $tag   = $this->getTagName($xpath);
         $type  = $this->getAttribute($xpath, 'type');
-        $value = null;
 
         if ('radio' === $type) {
             $name = $this->getAttribute($xpath, 'name');
@@ -325,6 +323,7 @@ JS;
             }
         } elseif ('checkbox' === $type) {
             $checkbox = $this->client->findByXPath($xpath);
+
             return $checkbox->isChecked() ? $checkbox->getValue() : null;
         } elseif ('select' === $tag && 'multiple' === $this->getAttribute($xpath, 'multiple')) {
             $xpathEscaped = json_encode(sprintf('(%s)[1]', $xpath));
