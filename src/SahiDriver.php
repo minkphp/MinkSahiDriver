@@ -10,9 +10,7 @@
 
 namespace Behat\Mink\Driver;
 
-use Behat\Mink\Element\NodeElement;
 use Behat\Mink\Exception\DriverException;
-use Behat\Mink\Session;
 use Behat\SahiClient\Client;
 
 /**
@@ -25,7 +23,6 @@ class SahiDriver extends CoreDriver
     private $started = false;
     private $browserName;
     private $client;
-    private $session;
 
     /**
      * Initializes Sahi driver.
@@ -51,14 +48,6 @@ class SahiDriver extends CoreDriver
     public function getClient()
     {
         return $this->client;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function setSession(Session $session)
-    {
-        $this->session = $session;
     }
 
     /**
@@ -224,7 +213,7 @@ JS;
     /**
      * {@inheritdoc}
      */
-    public function find($xpath)
+    public function findElementXpaths($xpath)
     {
         $jsXpath = json_encode($xpath);
         $function = <<<JS
@@ -238,7 +227,7 @@ JS;
         $count = intval($this->evaluateScript($function));
         $elements = array();
         for ($i = 0; $i < $count; $i++) {
-            $elements[] = new NodeElement(sprintf('(%s)[%d]', $xpath, $i + 1), $this->session);
+            $elements[] = sprintf('(%s)[%d]', $xpath, $i + 1);
         }
 
         return $elements;
