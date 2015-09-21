@@ -20,6 +20,10 @@
         "behat/sahi-client":  "~1.2@dev"
     },
 
+    "require-dev": {
+        "symfony/phpunit-bridge": "~2.7"
+    },
+
     "autoload": {
         "psr-4": {
             "Behat\\Mink\\Driver\\": "src/"
