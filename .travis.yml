@@ -11,13 +11,12 @@ before_script:
   - export DISPLAY=:99.0
   - sleep 4
 
-  - curl -L http://downloads.sourceforge.net/project/sahi/sahi-v44/sahi_20130429.zip > sahi.zip
+  - curl -L http://downloads.sourceforge.net/project/sahi/sahi-v5/sahi_20141105.zip > sahi.zip
   - unzip sahi.zip > /dev/null
   - sed -i -e "s,<path>/usr/bin/firefox</path>,<path>/usr/local/bin/firefox</path>,g" sahi/config/browser_types/linux.xml
   - cd sahi/bin
   - sh sahi.sh > /tmp/sahi_output.log &
   - cd -
-  - sleep 4
 
   - composer install --prefer-source
 
