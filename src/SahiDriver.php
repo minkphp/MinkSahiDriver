@@ -152,7 +152,11 @@ JS;
         if (null === $value) {
             $this->deleteCookie($name);
         } else {
-            $this->executeScript(sprintf('_sahi._createCookie(%s, %s)', json_encode($name), json_encode($value)));
+            $this->executeScript(sprintf(
+                '_sahi._createCookie(%s, %s)',
+                json_encode($name),
+                json_encode(urlencode($value))
+            ));
         }
     }
 
