@@ -1,3 +1,14 @@
+1.2.1 / 2016-03-05
+==================
+
+Bug fixes:
+
+* Fixed the handling of cookies with semicolon in the value
+
+Testsuite:
+
+* Added testing on PHP 7
+
 1.2.0 / 2015-09-21
 ==================
 
